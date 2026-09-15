@@ -334,7 +334,7 @@ class SPAManager {
             <p class="search-feedback" id="searchFeedback" role="status" aria-live="polite" aria-atomic="true"></p>
           </div>
           <div class="hero-image">
-            <img src="image.png/pasta.jpg" 
+            <img src="pasta.jpg" 
                  alt="Freshly cooked Italian pasta with herbs and tomatoes" 
                  width="400" 
                  height="400"
