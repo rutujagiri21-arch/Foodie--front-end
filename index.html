@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Foodie SPA - Interactive Single Page Application Simulation featuring client-side routing, dynamic DOM rendering, state management, and live order tracking.">
+    <meta name="theme-color" content="#e65100">
+    <title>Foodie — Single Page Application (SPA)</title>
+    <!-- Preconnect to external font CDN for faster performance -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+    <a href="#app" class="skip-link">Skip to main content</a>
+
+    <div id="routeAnnouncer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <header class="navbar" role="banner">
+        <div class="logo">
+            <a href="#/" class="logo-title" data-link aria-label="Foodie Home">
+                <i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Foodie
+            </a>
+            <span class="spa-badge" title="Dynamic Single Page Application Simulation">SPA SIMULATION</span>
+            <p>Fresh Food at Your Doorstep</p>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <nav class="menu" id="navMenu" aria-label="Main Navigation">
+            <ul>
+                <li><a href="#/" class="nav-link active" data-link data-route="#/" aria-current="page">Home</a></li>
+                <li><a href="#/menu" class="nav-link" data-link data-route="#/menu">Menu & Dishes</a></li>
+                <li><a href="#/tracking" class="nav-link" data-link data-route="#/tracking">Live Tracking</a></li>
+                <li><a href="#/about" class="nav-link" data-link data-route="#/about">About Us</a></li>
+                <li><a href="#/contact" class="nav-link" data-link data-route="#/contact">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="navbar-buttons">
+            <a href="#/cart" class="cart-btn" id="cartBtn" data-link data-route="#/cart" aria-label="Shopping Cart, 0 items">
+                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                <span>Cart</span>
+                <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+            </a>
+        </div>
+    </header>
+    
+    <main id="app" role="main" aria-live="polite">
+        <section class="hero" aria-labelledby="heroTitle">
+            <div class="hero-text">
+                <h1 id="heroTitle">Delicious Food!!<br>
+                   <span> Delivered Fast..</span>
+                </h1>
+                <p>Experience our interactive Single Page Application. Order your favourite meals with instant routing, live tracking, and zero page reloads.</p>
+                
+                <div class="hero-cta-group">
+                    <a href="#/menu" class="cta-primary-btn" data-link>
+                        <i class="fa-solid fa-utensils" aria-hidden="true"></i> Explore Full Menu
+                    </a>
+                    <a href="#/tracking" class="cta-secondary-btn" data-link>
+                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Track Live Order
+                    </a>
+                </div>
+
+                <form class="search-box" role="search" aria-label="Find restaurants and dishes" onsubmit="event.preventDefault();">
+                    <div class="input-wrapper">
+                        <label for="locationInput" class="sr-only">Delivery Location</label>
+                        <input type="text" id="locationInput" placeholder="Enter your delivery location" autocomplete="street-address">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="foodSearch" class="sr-only">Search food or restaurant</label>
+                        <input type="text" id="foodSearch" placeholder="Search food or restaurant" autocomplete="off">
+                    </div>
+                    <button type="submit" id="searchBtn" aria-label="Search restaurants">Search</button>
+                </form>
+                <p class="search-feedback" id="searchFeedback" role="status" aria-live="polite" aria-atomic="true"></p>
+            </div>
+            <div class="hero-image">
+                <img src="pasta.jpg" 
+                     alt="Artisanal freshly cooked Italian pasta topped with aromatic basil and tomatoes" 
+                     width="400" 
+                     height="400"
+                     fetchpriority="high"
+                     decoding="async">
+            </div>
+        </section>
+
+        <section class="categories" id="categories" aria-labelledby="categoriesHeading">
+            <h2 id="categoriesHeading">Popular Categories :</h2>
+
+            <div class="category-container" id="categoryContainer" role="region" aria-label="Food category filters">
+                <button type="button" class="card" data-category="pizza" aria-pressed="false" aria-label="Filter by Pizza">
+                    <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i>
+                    <p>Pizza</p>
+                </button>
+
+                <button type="button" class="card" data-category="burger" aria-pressed="false" aria-label="Filter by Burger">
+                    <i class="fa-solid fa-burger" aria-hidden="true"></i>
+                    <p>Burger</p>
+                </button>
+
+                <button type="button" class="card" data-category="biryani" aria-pressed="false" aria-label="Filter by Biryani">
+                    <i class="fa-solid fa-bowl-rice" aria-hidden="true"></i>
+                    <p>Biryani</p>
+                </button>
+
+                <button type="button" class="card" data-category="dessert" aria-pressed="false" aria-label="Filter by Dessert">
+                    <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
+                    <p>Dessert</p>
+                </button>
+
+                <button type="button" class="card" data-category="drink" aria-pressed="false" aria-label="Filter by Drink">
+                    <i class="fa-solid fa-glass-water" aria-hidden="true"></i>
+                    <p>Drink</p>
+                </button>
+
+                <button type="button" class="card" data-category="salads" aria-pressed="false" aria-label="Filter by Salads">
+                    <i class="fa-solid fa-bowl-food" aria-hidden="true"></i>
+                    <p>Salads</p>
+                </button>
+            </div>
+        </section>  
+
+        <section class="restaurants" id="restaurants" aria-labelledby="restaurantsHeading">
+            <div class="section-header-flex">
+                <h2 id="restaurantsHeading">Popular Restaurants & Dishes :</h2>
+                <a href="#/menu" class="view-all-link" data-link>View Full Menu <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <p class="no-results" id="noResults" role="status" aria-live="polite" hidden>No restaurants or dishes match your search. Please try another term.</p>
+            
+            <div class="restaurant-container" id="restaurantContainer">
+                <!-- Dishes loaded and rendered dynamically -->
+            </div>
+        </section>
+
+        <section class="features-section" id="about" aria-labelledby="featuresHeading">
+            <h2 id="featuresHeading">Why Choose Foodie SPA?</h2>
+            <div class="features-container">
+                <div class="feature-box">
+                    <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                    <h3>Zero Full-Page Reloads</h3>
+                    <p>Seamless client-side routing with the browser History API & hash navigation.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                    <h3>30-Min Fast Delivery</h3>
+                    <p>Live interactive order tracking with real-time status updates and progress stepper.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-award" aria-hidden="true"></i>
+                    <h3>Hygiene & Quality Assured</h3>
+                    <p>Every restaurant partner follows rigorous hygiene protocols and safety certifications.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="dishModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal-card">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dish details">&times;</button>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
+    </div>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div>
+                <h3>Foodie<span>.spa</span></h3>
+                <p>A client-side Single Page Application simulation engineered with modern HTML5, CSS3, and JavaScript ES6+.</p>
+                <p class="spa-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Single Page Architecture</p>
+            </div>
+
+            <div>
+                <h3>Navigation</h3>
+                <p><a href="#/" data-link>Home</a></p>
+                <p><a href="#/menu" data-link>Full Menu</a></p>
+                <p><a href="#/tracking" data-link>Order Tracking</a></p>
+                <p><a href="#/cart" data-link>Shopping Cart</a></p>
+            </div>
+
+            <div>
+                <h3>Company</h3>
+                <p><a href="#/about" data-link>About Us</a></p>
+                <p><a href="#/contact" data-link>Contact Us</a></p>
+                <p><a href="#/404-test" data-link>Test 404 Route</a></p>
+            </div>
+        </div>
+
+        <p class="copyright">
+            &copy; 2026 Foodie SPA | Week 5 Task: Developing a Single Page Application Simulation. All rights reserved.
+        </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
+
